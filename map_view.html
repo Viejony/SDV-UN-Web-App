@@ -1,23 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <title>SDV UN</title>
-<meta charset="UTF-8">
 
-<head>
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <script src="https://static.robotwebtools.org/EaselJS/current/easeljs.js"></script>
 <script src="https://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
 <script src="https://static.robotwebtools.org/roslibjs/current/roslib.js"></script>
 <script src="https://static.robotwebtools.org/nav2djs/current/nav2d.js"></script>
-<script src="https://static.robotwebtools.org/ros2djs/current/ros2d.js"></script>
+<script src="libs/ros2d.js"></script>
+<script src="libs/jquery.min.js"></script>
+<script src="libs/jquery.animate-colors-min.js"></script>
+<script src="libs/animation.js"></script>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="ui/w3.css">
+<link rel="stylesheet" href="ui/w3-theme-black.css">
+<link rel="stylesheet" href="ui/Roboto.css">
+
+<link href="favicon.ico" rel="icon" type="image/x-icon" />
 
 
 <style>
@@ -62,52 +70,49 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 
   <div class="w3-row w3-padding-64">
 
-    <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal">Navegación por el Laboratorio</h1>
+    <div class="w3-container">
+      <h3 class="w3-text-teal">Navegación por el Laboratorio</h3>
     </div>
 
-    <!-- Mapa tipo card-->
+    <!-- Mapa, log y botones-->
     <div class="w3-twothird w3-container ">
       <div class="w3-card-4">
         <div id="map"></div>
-      </div> 
-    </div>
-
-    <!-- Botones de zoom y desplazamiento-->
-    <div class="w3-twothird w3-container w3-padding-16">
-      <button id="zoom_in" type="button" onclick="zoomInMap()">
-        <i class="material-icons">zoom_in</i>
-      </button>
-      <button id="zoom_out" type="button" onclick="zoomOutMap()">
-        <i class="material-icons">zoom_out</i>
-      </button>
-      <button id="shift_up" type="button" onclick="shiftUpMap()">
-        <i class="material-icons">arrow_upward</i>
-      </button>
-      <button id="shift_down" type="button" onclick="shiftDownMap()">
-        <i class="material-icons">arrow_downward</i>
-      </button>
-      <button id="shift_left" type="button" onclick="shiftLeftMap()">
-        <i class="material-icons">arrow_back</i>
-      </button>
-      <button id="shift_right" type="button" onclick="shiftRightMap()">
-        <i class="material-icons">arrow_forward</i>
-      </button>
-    </div>    
-
-    <div class="w3-twothird w3-container w3-padding-16">
-      <!--p>Se muestra el mapa del laboratorio LabFabEx. Puedes seleccionar el punto de destino y la orientación haciendo click sobre el mapa. Los botones inferiores te permiten ajustar el tamaño y posición del mapa.</p-->
-        
+      </div>
+      <!-- Zona de retroalimentación de eventos-->
+      <div id="feedback_div">
         <p id=feedback>Esperando conexión</p>
+      </div>
+      <!-- Botones de zoom y desplazamiento-->
+      <div class="w3-bar">
+        <button class="w3-button w3-teal" id="zoom_in" type="button" onclick="zoomInMap()">
+          <i class="material-icons">zoom_in</i>
+        </button>
+        <button class="w3-button w3-teal" id="zoom_out" type="button" onclick="zoomOutMap()">
+          <i class="material-icons">zoom_out</i>
+        </button>
+        <button class="w3-button w3-teal" id="shift_up" type="button" onclick="shiftUpMap()">
+          <i class="material-icons">arrow_upward</i>
+        </button>
+        <button class="w3-button w3-teal" id="shift_down" type="button" onclick="shiftDownMap()">
+          <i class="material-icons">arrow_downward</i>
+        </button>
+        <button class="w3-button w3-teal" id="shift_left" type="button" onclick="shiftLeftMap()">
+          <i class="material-icons">arrow_back</i>
+        </button>
+        <button class="w3-button w3-teal" id="shift_right" type="button" onclick="shiftRightMap()">
+          <i class="material-icons">arrow_forward</i>
+        </button>
+      </div>  
     </div>
+
 
 
   </div>
 
-
   <footer id="Footer">
     <div class="w3-container w3-theme-l2 w3-padding-16 ">
-        <img src="unal_logo_white.png" width=256/>
+        <img src="unal_logo_white.png" width=150/>
     </div>
 
     <div class="w3-container w3-theme-l1 w3-padding-8">
@@ -118,6 +123,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 <!-- END MAIN -->
 </div>
 
+<!--/////////////////////////////////////////////////////////////////////////-->
 <!-- JAVASCRIPT -->
 <script>
     
@@ -145,13 +151,14 @@ function w3_close() {
 }
 
 
-////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // ROS
 
 var viewer;
 var zoomSteps = 0;
 var verticalShiftSteps = 0;
 var horizontalShiftSteps = 0;
+var conectionStatus = 0; // 0: no intentado, 1: exitosa, 2: erronea
 
 // Zoom-in al mapa en 10%
 function zoomInMap(){
@@ -199,27 +206,30 @@ function init() {
     // Conección a el servidor websocket en ROS
     var rbServer = new ROSLIB.Ros({
         //url : 'ws://192.168.1.12:9090'
-        url : 'ws://localhost:9090'
+        //url : 'ws://localhost:9090'
+        url : 'ws://192.168.10.104:9090'
     });
     
     // Esta función es invocada al ocurrir un envento de conección
     rbServer.on('connection', function() {
         // Escribe un mensaje en la zona de Feedback cuando ocurre la conexión correcta
-        var fbDiv = document.getElementById('feedback');
-        fbDiv.innerHTML += "<p>Conectado al servidor websocket del SDV.</p>";
+        $("#feedback").text ("Conectado al servidor websocket del SDV");
+        conectionStatus = 1;
     });
 
     // Esta función es invocada cuando hay un error en la conexión con el servidor rosbridge
     rbServer.on('error', function(error) {
         // Escribe un mensaje en la zona de Feedback cuando ocurre la conexión correcta
-        var fbDiv = document.getElementById('feedback');
-        fbDiv.innerHTML += "<p>Error en la conexión con el servidor websocket del SDV.</p>";
+        $("#feedback").text("Error en la conexión con el servidor websocket del SDV");
+        conectionStatus = 2;
+        redAlert("#feedback");
     });
 
     // Esta función es llamada cuando la conección con el servidor websocket es cerrada
     rbServer.on('close', function() {
-        var fbDiv = document.getElementById('feedback');
-        fbDiv.innerHTML += "<p>Conexión cerrada.</p>";
+      if(conectionStatus == 1){
+        $("#feedback").text("Conexión cerrada");
+      }
      });
 
     // Crea un objeto de visualización y lo enlaza a la etiqueta map
