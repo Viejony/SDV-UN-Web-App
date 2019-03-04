@@ -5,16 +5,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<script src="https://static.robotwebtools.org/EaselJS/current/easeljs.js"></script>
-<script src="https://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
-<script src="https://static.robotwebtools.org/roslibjs/current/roslib.js"></script>
-<script src="https://static.robotwebtools.org/nav2djs/current/nav2d.js"></script>
+<script src="libs/easeljs.js"></script>
+<script src="libs/eventemitter2.min.js"></script>
+<script src="libs/roslib.js"></script>
+<script src="libs/nav2d.js"></script>
 <script src="libs/ros2d.js"></script>
 <script src="libs/jquery.min.js"></script>
 <script src="libs/jquery.animate-colors-min.js"></script>
 <script src="libs/animation.js"></script>
-
-
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
@@ -45,10 +43,10 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 <!-- Navbar -->
 <div class="w3-top">
   <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
-    <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+    <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+    <a id="stop_emergency" class="w3-bar-item w3-button w3-right w3-hover-orange">Parar</a>
     <a href="main.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">SDV UN</a>
     <a href="map_view.html" class="w3-bar-item w3-button w3-theme-l1">Navegación</a>
-    <a href="teleop.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Teleoperación </a>
     <a href="help.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Ayuda</a>
   </div>
 </div>
@@ -68,46 +66,64 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
 <div class="w3-main" style="margin-left:250px">
 
-  <div class="w3-row w3-padding-64">
-
-    <div class="w3-container">
+  <!-- Título de la página-->
+  <div class="w3-container" style="margin-top:50px">
+    <div class="w3-twothird w3-container">
       <h3 class="w3-text-teal">Navegación por el Laboratorio</h3>
     </div>
+  </div>
 
-    <!-- Mapa, log y botones-->
-    <div class="w3-twothird w3-container ">
-      <div class="w3-card-4">
+  <!-- Fila de elementos: Se distribuyen con una relación 2/3 y 1/3 de ancho
+  cuando el ancho de la pantalla lo permite-->
+  <div class="w3-row">
+
+    <!-- Mapa, log y paneles de botones-->
+    <div class="w3-twothird w3-container " style="margin-bottom:16px">
+      <div id="card-map" class="w3-card-4">
         <div id="map"></div>
       </div>
-      <!-- Zona de retroalimentación de eventos-->
+      <!-- Zona de retroalimentación de eventos de conección-->
       <div id="feedback_div">
         <p id=feedback>Esperando conexión</p>
       </div>
       <!-- Botones de zoom y desplazamiento-->
-      <div class="w3-bar">
-        <button class="w3-button w3-teal" id="zoom_in" type="button" onclick="zoomInMap()">
+      <div class="w3-bar">        
+        <button class="w3-bar-item w3-button w3-teal" id="zoom_in" onclick="zoomInMap()">
           <i class="material-icons">zoom_in</i>
         </button>
-        <button class="w3-button w3-teal" id="zoom_out" type="button" onclick="zoomOutMap()">
+        <button class="w3-bar-item w3-button w3-teal" id="zoom_out" onclick="zoomOutMap()">
           <i class="material-icons">zoom_out</i>
         </button>
-        <button class="w3-button w3-teal" id="shift_up" type="button" onclick="shiftUpMap()">
+        <button class="w3-bar-item w3-button w3-teal" id="shift_up" onclick="shiftUpMap()">
           <i class="material-icons">arrow_upward</i>
         </button>
-        <button class="w3-button w3-teal" id="shift_down" type="button" onclick="shiftDownMap()">
+        <button class="w3-bar-item w3-button w3-teal" id="shift_down" onclick="shiftDownMap()">
           <i class="material-icons">arrow_downward</i>
         </button>
-        <button class="w3-button w3-teal" id="shift_left" type="button" onclick="shiftLeftMap()">
+        <button class="w3-bar-item w3-button w3-teal" id="shift_left" onclick="shiftLeftMap()">
           <i class="material-icons">arrow_back</i>
         </button>
-        <button class="w3-button w3-teal" id="shift_right" type="button" onclick="shiftRightMap()">
+        <button class="w3-bar-item w3-button w3-teal" id="shift_right" onclick="shiftRightMap()">
           <i class="material-icons">arrow_forward</i>
         </button>
-      </div>  
+      </div>
+    
+    <!-- Fin del row-->
     </div>
 
+    <!-- Páneles de información y botones-->
+    <div class="w3-third w3-container">
+      <p id="info_location" class="w3-border w3-padding-large w3-padding-32 w3-center">
+        Info Location Panel</p>      
+      <p id="pred_location" class="w3-border w3-padding-large w3-padding-32 w3-center">
+        Predefined Location Buttons</p>
+      <p id="user_location" class="w3-border w3-padding-large w3-padding-64 w3-center">
+        User Location Buttons</p>
+      <p id="manual_location" class="w3-border w3-padding-large w3-padding-64 w3-center">
+        Manual Operation Buttons</p>
+    </div>
 
-
+  <!-- Fin del row-->
   </div>
 
   <footer id="Footer">
@@ -126,7 +142,10 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 <!--/////////////////////////////////////////////////////////////////////////-->
 <!-- JAVASCRIPT -->
 <script>
-    
+
+////////////////////////////////////////////////////////////////////////////////
+// Interfáz Gráfica y animaciones
+
 // Get the Sidebar
 var mySidebar = document.getElementById("mySidebar");
 
@@ -150,6 +169,11 @@ function w3_close() {
   overlayBg.style.display = "none";
 }
 
+// Stop Button
+$("a#stop_emergency").css("background-color","#FF0000");
+
+////////////////////////////////////////////////////////////////////////////////
+// 
 
 ////////////////////////////////////////////////////////////////////////////////
 // ROS
@@ -169,37 +193,37 @@ function zoomInMap(){
 
 // Zoom-out al mapa en 10%
 function zoomOutMap(){
-  viewer.scene.scaleX *= (1/1.1)
-  viewer.scene.scaleY *= (1/1.1)
-  zoomSteps += -1
+  viewer.scene.scaleX *= (1/1.1);
+  viewer.scene.scaleY *= (1/1.1);
+  zoomSteps += -1;
 }
 
 // Desplazamiento del mapa hacia arriba
 function shiftUpMap(){
-  viewer.shift(0, -1)
-  verticalShiftSteps += -1
+  viewer.shift(0, -1);
+  verticalShiftSteps += -1;
 }
 
 // Desplazamiento del mapa hacia abajo
 function shiftDownMap(){
-  viewer.shift(0, 1)
-  verticalShiftSteps += 1
+  viewer.shift(0, 1);
+  verticalShiftSteps += 1;
 }
 
 // Desplazamiento del mapa hacia la derecha
 function shiftRightMap(){
-  viewer.shift(-1, 0)
-  horizontalShiftSteps += -1
+  viewer.shift(-1, 0);
+  horizontalShiftSteps += -1;
 }
 
 // Desplazamiento del mapa hacia la izquierda
 function shiftLeftMap(){
-  viewer.shift(1, 0)
-  horizontalShiftSteps += 1
+  viewer.shift(1, 0);
+  horizontalShiftSteps += 1;
 }
 
 /**
-  * Configura los elementos de visualización cuando de carga la página
+  * Configura los elementos de visualización cuando se carga la página
   */
 function init() {
 
@@ -234,20 +258,14 @@ function init() {
 
     // Crea un objeto de visualización y lo enlaza a la etiqueta map
     var w = document.getElementById("map").offsetWidth;
-    var h = document.getElementById("map").offsetHeight;
-    var max = w > h ? w : h;
-    //alert("w=" + w + " h=" + h);
     viewer = new ROS2D.Viewer({
         divID : 'map',
-        width : max,
-        height : 300,
+        width : w,
+        height : w,
         background : '#ffffff',
-        //continuous : true
+        continuous : true
     });
-    document.getElementById("map").setAttribute("offsetHeight",h);
     
-
-
     // Configura el cliente de navegación y lo anexa al objeto viewer
     var nav = NAV2D.OccupancyGridClientNav({
         ros : rbServer,
@@ -256,6 +274,31 @@ function init() {
         serverName : '/move_base',
         withOrientation : true
     });
+
+    // Se crea un objeto tipo topic como se indica en roslibjs. Este topic
+    // permite cancelar el movimiento del SDV
+    var cancelTopic = new ROSLIB.Topic({
+        ros : rbServer,
+        name : '/move_base/cancel',
+        messageType : 'actionlib_msgs/GoalID'
+    });
+
+    // Publica el mensaje de cancelación
+    function pubCancelMessage(){
+      var msg = new ROSLIB.Message({
+        stamp : {
+          secs : 0,
+          nsecs : 0
+        },
+        id : ""
+      });
+      cancelTopic.publish(msg);
+    }
+
+    // Enlazando evento del botón de parada con la función
+    $("#stop_emergency").click(pubCancelMessage);
+
+// Fin de init
 }
 
 </script>
