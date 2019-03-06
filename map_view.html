@@ -15,7 +15,6 @@
 <script src="libs/jquery.animate-colors-min.js"></script>
 <script src="libs/animation.js"></script>
 
-
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
@@ -294,9 +293,9 @@ function init() {
 
   // Object that manages the ROS Websocket Server Comunication
   var rbServer = new ROSLIB.Ros({
-      //url : 'ws://192.168.1.12:9090'
+      url : 'ws://192.168.1.11:9090'
       //url : 'ws://localhost:9090'
-      url : 'ws://192.168.10.104:9090'
+      //url : 'ws://192.168.10.104:9090'
   });
   
   // Function that is invoked when the ROSBridge connection is successful
@@ -348,7 +347,10 @@ function init() {
       rootObject : viewer.scene,
       viewer : viewer,
       serverName : '/move_base',
-      withOrientation : true
+      //serverName : '/sdvun3/move_base',
+      withOrientation : true,
+      // topic (optional) - the map topic to listen to
+      //topic : "/sdvun3/map",
   });
 
 
@@ -362,6 +364,7 @@ function init() {
   var cancelTopic = new ROSLIB.Topic({
       ros : rbServer,
       name : '/move_base/cancel',
+      //name : '/sdvun3/move_base/cancel',
       messageType : 'actionlib_msgs/GoalID'
   });
 
@@ -396,6 +399,7 @@ function init() {
   var send2locationTopic = new ROSLIB.Topic({
       ros : rbServer,
       name : '/move_base_simple/goal',
+      //name : '/sdvun3/move_base_simple/goal',
       messageType : 'geometry_msgs/PoseStamped'
   });
 
@@ -533,7 +537,9 @@ function init() {
   */
   var actualLocationTopic = new ROSLIB.Topic({
       ros : rbServer,
-      name : '/odom',
+      //name : '/odom',
+      //name : '/sdvun3/scanmatch_odom',
+      name : '/scanmatch_odom',
       messageType : 'nav_msgs/Odometry'
   });
 
