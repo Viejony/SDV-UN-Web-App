@@ -1,15 +1,27 @@
+<?php 
+session_start();
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+}
+else {
+    $_SESSION['loggedin'] = false;
+    $_SESSION['username'] = "";
+    $_SESSION['sdv_ip'] = "";
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <title>SDV UN</title>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="ui/w3.css">
 <link rel="stylesheet" href="ui/w3-theme-black.css">
 <link rel="stylesheet" href="ui/Roboto.css">
 <link rel="stylesheet" href="ui/font-awesome.min.css">
 <link href="favicon.ico" rel="icon" type="image/x-icon" />
+    
+<script src="libs/jquery.min.js"></script>
 
 <style>
 html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
@@ -21,26 +33,27 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
   height: inherit;
 }
 </style>
-
 <body onload="init()">
 
 <!-- Navbar -->
 <div class="w3-top">
   <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
     <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
-    <a href="index.html" class="w3-bar-item w3-button w3-hide-small w3-hover-l1">SDV UN</a>
-    <a href="map_view.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Navegación</a>
-    <a href="help.html" class="w3-bar-item w3-button w3-theme-white">Ayuda</a>
+    <a href="index.php" class="w3-bar-item w3-button w3-hide-small w3-hover-white">SDV UN</a>
+    <a href="login.php" class="w3-bar-item w3-button w3-theme-white" id="user_login"></a>
+    <a href="help.php" class="w3-bar-item w3-button w3-theme-l1">Ayuda</a>
   </div>
 </div>
 
 <!-- Sidebar -->
 <nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left" id="mySidebar">
-  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
-    <i class="fa fa-remove"></i>
-  </a>
-  <h4 class="w3-bar-item"><b>Menu</b></h4>
-  <a class="w3-bar-item w3-button w3-hover-black" href="#">Link</a>
+    <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
+        <i class="fa fa-remove"></i>
+    </a>
+    <h4 class="w3-bar-item"><b>Menu</b></h4>
+    <a class="w3-bar-item w3-button w3-hover-black" href="login.php" id="user_login_sidebar">Acceder</a>
+    <a class="w3-bar-item w3-button w3-hover-black" href="help.php" id="help_sidebar">Ayuda</a>
+    <!-- Here is the Close Session link, that is only visible when there is a session opened -->
 </nav>
 
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -51,20 +64,20 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      <h3 class="w3-text-teal">SDV UN</h3>
+      <h3 class="w3-text-teal">Ayuda</h3>
     </div>
   </div>
 
 
+  <!-- Footer: this place contains the UNAL logo and name of the department-->
   <footer id="Footer">
-    <div class="w3-container w3-theme-l2 w3-padding-32">
-      <h4>Universidad Nacional de Colombia</h4>
+    <div class="w3-container w3-theme-l2 w3-padding-16 ">
+        <img src="unal_logo_white.png" width=150/>
     </div>
 
-    <div class="w3-container w3-theme-l1">
+    <div class="w3-container w3-theme-l1 w3-padding-8">
       <p>Departamento de ingeniería mecánica y mecatrónica</p>
     </div>
-
   </footer>
 
 <!-- END MAIN -->
@@ -99,6 +112,18 @@ function w3_close() {
  */
 function init() {
 
+    // Verify if some session is active and change the link and name of the login link
+    var loggedin = "<?php echo $_SESSION['loggedin']; ?>";
+    if (loggedin == "1") {
+        $("#user_login").text("<?php echo $_SESSION['username']; ?>");
+        $("#user_login").attr("href", "map_view.php");
+        $("#user_login_sidebar").text("<?php echo $_SESSION['username']; ?>");
+        $("#user_login_sidebar").attr("href", "map_view.php");
+        $("#help_sidebar").after('<a class="w3-bar-item w3-button w3-hover-black" href="logout.php">Cerrar Sesión</a>');
+    } else {
+        $("#user_login").text("Acceder");
+    }
+    
 }
 </script>
 

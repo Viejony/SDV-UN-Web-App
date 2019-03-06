@@ -1,3 +1,31 @@
+<?php
+session_start();
+
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+  // Continue in the page if the session is active
+}
+
+else {
+    $_SESSION['loggedin'] = false;
+    $_SESSION['username'] = "";
+    $_SESSION['sdv_ip'] = "";
+    echo "Inicia Sesion para acceder a este contenido.<br>";
+    echo "<br><a href='login.html'>Login</a>";
+    echo "<br><br><a href='index.html'>Registrarme</a>";
+    header('Location: login.php');
+    exit;
+}
+
+$now = time();
+
+if($now > $_SESSION['expire']) {
+    session_destroy();
+    header('Location: login.html');
+    echo "Tu sesion a expirado, <a href='login.html'>Inicia Sesion</a>";
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <title>SDV UN: Navegación</title>
@@ -15,11 +43,10 @@
 <script src="libs/jquery.animate-colors-min.js"></script>
 <script src="libs/animation.js"></script>
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="ui/icon.css">
+<link rel="stylesheet" href="ui/w3-theme-black.css">
+<link rel="stylesheet" href="ui/Roboto.css">
+<link rel="stylesheet" href="ui/font-awesome.min.css">
 <link rel="stylesheet" href="ui/w3.css">
 <link rel="stylesheet" href="ui/w3-theme-black.css">
 <link rel="stylesheet" href="ui/Roboto.css">
@@ -46,19 +73,21 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
   <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
     <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     <a id="emergency_stop_button" class="w3-bar-item w3-button w3-right w3-hover-orange">Parar</a>
-    <a href="main.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">SDV UN</a>
-    <a href="map_view.html" class="w3-bar-item w3-button w3-theme-l1">Navegación</a>
-    <a href="help.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Ayuda</a>
+    <a href="index.php" class="w3-bar-item w3-button w3-hide-small w3-hover-white">SDV UN</a>
+    <a href="map_view.php" class="w3-bar-item w3-button w3-theme-l1" id="user_login"></a>
+    <a href="help.php" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Ayuda</a>
   </div>
 </div>
 
 <!-- Sidebar -->
 <nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left" id="mySidebar">
-  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
+    <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
     <i class="fa fa-remove"></i>
-  </a>
-  <h4 class="w3-bar-item"><b>Menu</b></h4>
-  <a class="w3-bar-item w3-button w3-hover-black" href="#">Link</a>
+    </a>
+    <h4 class="w3-bar-item"><b>Menu</b></h4>
+    <a class="w3-bar-item w3-button w3-hover-black" href="login.php" id="user_login_sidebar">Acceder</a>
+    <a class="w3-bar-item w3-button w3-hover-black" href="help.php" id="help_sidebar">Ayuda</a>
+    <!-- Here is the Close Session link, that is only visible when there is a session opened -->
 </nav>
 
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -243,6 +272,7 @@ var zoomSteps = 0;
 var verticalShiftSteps = 0;
 var horizontalShiftSteps = 0;
 var conectionStatus = 0; // 0: no intentado, 1: exitosa, 2: erronea
+var sdv_ip = "";
 
 // Zoom-in the map
 function zoomInMap(){
@@ -287,15 +317,28 @@ function shiftLeftMap(){
   only works if the page has been loaded.
 */
 function init() {
+    
+    // Verify if some session is active and change the link and name of the login link
+    var loggedin = "<?php echo $_SESSION['loggedin']; ?>";
+    if (loggedin == "1") {
+        $("#user_login").text("<?php echo $_SESSION['username']; ?>");
+        $("#user_login").attr("href", "map_view.php");
+        $("#user_login_sidebar").text("<?php echo $_SESSION['username']; ?>");
+        $("#user_login_sidebar").attr("href", "map_view.php");
+        $("#help_sidebar").after('<a class="w3-bar-item w3-button w3-hover-black" href="logout.php">Cerrar Sesión</a>');
+    } else {
+        $("#user_login").text("Acceder");
+    }
 
   //////////////////////////////////////////////////////////////////////////////
   // ROS Conection
 
+  // Loading sdv_ip from PHP session variable
+  sdv_ip = "<?php echo $_SESSION['sdv_ip']; ?>";
+
   // Object that manages the ROS Websocket Server Comunication
   var rbServer = new ROSLIB.Ros({
-      url : 'ws://192.168.1.11:9090'
-      //url : 'ws://localhost:9090'
-      //url : 'ws://192.168.10.104:9090'
+      url : 'ws://' + sdv_ip + ':9090'
   });
   
   // Function that is invoked when the ROSBridge connection is successful
