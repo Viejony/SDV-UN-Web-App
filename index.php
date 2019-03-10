@@ -46,6 +46,18 @@ else {
         height: inherit;
     }
 
+    div.polaroid {
+        width: 80%;
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        margin-bottom: 25px;
+    }
+
+    div.container {
+        text-align: center;
+        padding: 10px 20px;
+    }
+
 </style>
 
 <body onload="init()">
@@ -78,9 +90,29 @@ else {
     <div class="w3-main" style="margin-left:250px">
 
         <div class="w3-row w3-padding-64">
-            <div class="w3-twothird w3-container">
-                <h3 class="w3-text-teal">SDV UN</h3>
+            
+            <div class="w3-row">
+                <div class="w3-twothird w3-container">
+                    <h3 class="w3-text-teal">SDV UN</h3>
+                </div>  
             </div>
+
+            <div class="w3-row">
+                <div class="w3-twothird w3-container">
+                    <p>El SDV-UN es un vehículo auto manejado que hace parte del LabFabEx en la Universidad Nacional de Colombia. Usa el software ROS para la navegación junto a múltiples sensores que le permiten posicionarse en su entrono de trabajo con gran precisión. Con este aplicativo, puedes conectarte al software ROS de uno de los SDV y controlarlo de forma remota.</p>
+
+                    <p>Si no sabes como iniciar el SDV, en este <a href="https://gitlab.com/jfpinedap/Mobile-Robotics-User-Manual">enlace</a> puedes encontrar un tutorial detallado de la puesta en marcha del SDV.</p>
+
+                    <p>Debes acceder al servicio usando un usuario y una contraseña. Estas credenciales son las mismas que usan los SDV.</p>
+                </div>
+                <div class="w3-third w3-container">
+                    <div class="polaroid">
+                        <img src="pictures/sdv_a.webp" alt="SDV-UN" style="width:100%">
+                    </div>
+                </div>
+            </div>
+
+
         </div>
 
 

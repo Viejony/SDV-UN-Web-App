@@ -27,7 +27,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="email">IP</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" maxlength="50" id="email" placeholder="Dirección IP" name="ip">
+                    <input type="text" class="form-control" maxlength="50" id="email" placeholder="Dirección IP" name="ip" required>
                 </div>
             </div>
 

@@ -150,7 +150,7 @@ else {
          * Setup all visualization elements when the page is loaded. 
          */
         function init() {
-            
+
             // Verify if some session is active and change the link and name of the login link
             var loggedin = "<?php echo $_SESSION['loggedin']; ?>";
             if (loggedin == "1") {

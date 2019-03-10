@@ -33,7 +33,7 @@ else{
 
     if ($conexion->query($query) === TRUE) {
         echo "<br />" . "<h1>" . "Usuario creado" . "</h1>";
-        echo "<h3>" . "Iniciar Sesion: " . "<a href='login.html'>Login</a>" . "</h3>"; 
+        echo "<h3>" . "Iniciar Sesion: " . "<a href='login.php'>Login</a>" . "</h3>"; 
     }
 
     else {
