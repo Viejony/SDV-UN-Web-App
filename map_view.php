@@ -51,7 +51,7 @@ if($now > $_SESSION['expire']) {
 <link rel="stylesheet" href="ui/w3-theme-black.css">
 <link rel="stylesheet" href="ui/Roboto.css">
 
-<link href="favicon.ico" rel="icon" type="image/x-icon" />
+<link href="favicon.png" rel="icon" type="image/x-icon" />
 
 
 <style>

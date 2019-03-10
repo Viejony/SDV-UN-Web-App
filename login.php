@@ -22,7 +22,7 @@ else {
 <link rel="stylesheet" href="ui/font-awesome.min.css">
 <link rel="stylesheet" href="ui/bootstrap.min.css" crossorigin="anonymous">
 <link rel="stylesheet" href="ui/custom.css">
-<link href="favicon.ico" rel="icon" type="image/x-icon" />
+<link href="favicon.png" rel="icon" type="image/x-icon" />
 
 <style>
     html,
@@ -43,7 +43,6 @@ else {
         bottom: 0;
         height: inherit;
     }
-
 </style>
 
 <body onload="init()">
@@ -51,7 +50,8 @@ else {
     <!-- Navbar -->
     <div class="w3-top">
         <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
-            <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+            <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)"
+                onclick="w3_open()"><i class="fa fa-bars"></i></a>
             <a href="index.php" class="w3-bar-item w3-button w3-hide-small w3-hover-white">SDV UN</a>
             <a href="login.php" class="w3-bar-item w3-button w3-theme-l1">Acceder</a>
             <a href="help.php" class="w3-bar-item w3-button w3-theme-white">Ayuda</a>
@@ -60,7 +60,8 @@ else {
 
     <!-- Sidebar -->
     <nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left" id="mySidebar">
-        <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
+        <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large"
+            title="Close Menu">
             <i class="fa fa-remove"></i>
         </a>
         <h4 class="w3-bar-item"><b>Menu</b></h4>
@@ -87,10 +88,12 @@ else {
 
                                     <form action="check_login.php" method="post">
                                         <div class="form-group">
-                                            <input type="text" class="form-control input-lg" name="username" placeholder="Usuario" required>
+                                            <input type="text" class="form-control input-lg" name="username"
+                                                placeholder="Usuario" required>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control input-lg" name="password" placeholder="Password" required>
+                                            <input type="password" class="form-control input-lg" name="password"
+                                                placeholder="Password" required>
                                         </div>
                                         <button type="submit" class="btn btn-success btn-block">Login</button>
                                     </form>
@@ -158,13 +161,13 @@ else {
                 $("#user_login").attr("href", "map_view.php");
                 $("#user_login_sidebar").text("<?php echo $_SESSION['username']; ?>");
                 $("#user_login_sidebar").attr("href", "map_view.php");
-                $("#help_sidebar").after('<a class="w3-bar-item w3-button w3-hover-black" href="logout.php">Cerrar Sesión</a>');
+                $("#help_sidebar").after(
+                    '<a class="w3-bar-item w3-button w3-hover-black" href="logout.php">Cerrar Sesión</a>');
             } else {
                 $("#user_login").text("Acceder");
             }
 
         }
-
     </script>
 
 </body>

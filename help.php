@@ -7,7 +7,6 @@ else {
     $_SESSION['username'] = "";
     $_SESSION['sdv_ip'] = "";
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +19,7 @@ else {
 <link rel="stylesheet" href="ui/Roboto.css">
 <link rel="stylesheet" href="ui/font-awesome.min.css">
 <link rel="stylesheet" href="ui/collapsible.css">
-<link href="favicon.ico" rel="icon" type="image/x-icon" />
+<link href="favicon.png" rel="icon" type="image/x-icon" />
 
 <script src="libs/jquery.min.js"></script>
 
@@ -87,7 +86,7 @@ else {
                     <li>agv_nav: archivo .launch que ejecuta todos los nodos de navegación</li>
                     <li>rosbridge_websocket: nodo que permite la conección con aplicaciones remotas.</li>
                     <li>robot_pose_publisher: nodo que permite obtener información del SDV.</li>
-                    <p>En este <a href="https://gitlab.com/jfpinedap/Mobile-Robotics-User-Manual">enlace</a> puedes encontrar un tutorial detallado de la puesta en marcha del SDV. El software debe estar en un servidor conectado a la red del LabFabEx.</p>
+                    <p>En este <a href="https://gitlab.com/jfpinedap/Mobile-Robotics-User-Manual" target="_blank">enlace</a> puedes encontrar un tutorial detallado de la puesta en marcha del SDV. El software debe estar en un servidor conectado a la red del LabFabEx.</p>
                 </div>
                 
                 <button class="collapsible">El software no funciona correctamente</button>
