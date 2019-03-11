@@ -1,5 +1,5 @@
-<?
-php session_start();
+<?php 
+session_start();
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 }
 else {
@@ -20,7 +20,7 @@ else {
 <link rel="stylesheet" href="ui/font-awesome.min.css">
 <link rel="stylesheet" href="ui/bootstrap.min.css" crossorigin="anonymous">
 <link rel="stylesheet" href="ui/custom.css">
-<link href="favicon.png" rel="icon" type="image/x-icon" />
+<link href="pictures/favicon.png" rel="icon" type="image/x-icon" />
 
 <script src="libs/jquery.min.js"></script>
 
@@ -45,7 +45,7 @@ else {
     }
 </style>
 
-<body>
+<body onload="init()">
 
     <!-- Navbar -->
     <div class="w3-top">
@@ -74,13 +74,13 @@ else {
     <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
     <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
-    <div class="w3-main" style="margin-left:250px">
+    <div class="w3-main" style="margin-left:250px" id="main_content">
 
         <div class="w3-row w3-padding-64">
 
             <div class="container">
 
-                <h3 class="w3-text-teal">Crea un usuario</h3>
+                <h3 class="w3-text-teal">Crear un usuario</h3>
 
                 <form class="form-horizontal" action="create_user.php" method="post">
 
@@ -116,12 +116,17 @@ else {
 
                 </form>
 
+            </div>
+
         </div>
+
+        <!-- Blank Space, used to adjust the view if screen is taller than the content-->
+        <div id="blank_space" style="padding-top:0px;"></div>
 
         <!-- Footer: this place contains the UNAL logo and name of the department-->
         <footer id="Footer">
             <div class="w3-container w3-theme-l2 w3-padding-16 ">
-                <img src="unal_logo_white.png" width=150 />
+                <img src="pictures/unal_logo_white.png" width=150 />
             </div>
 
             <div class="w3-container w3-theme-l1 w3-padding-8">
@@ -131,6 +136,82 @@ else {
 
         <!-- END MAIN -->
     </div>
+
+    <script>
+        // Get the Sidebar
+        var mySidebar = document.getElementById("mySidebar");
+
+        // Get the DIV with overlay effect
+        var overlayBg = document.getElementById("myOverlay");
+
+        // Toggle between showing and hiding the sidebar, and add overlay effect
+        function w3_open() {
+            if (mySidebar.style.display === 'block') {
+                mySidebar.style.display = 'none';
+                overlayBg.style.display = "none";
+            } else {
+                mySidebar.style.display = 'block';
+                overlayBg.style.display = "block";
+            }
+        }
+
+        // Close the sidebar with the close button
+        function w3_close() {
+            mySidebar.style.display = "none";
+            overlayBg.style.display = "none";
+        }
+
+        // Collapsible tags
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        }
+
+        /**
+         * Setup all visualization elements when the page is loaded. 
+         */
+        function init() {
+
+            // Verify if some session is active and change the link and name of the login link
+            var loggedin = "<?php echo $_SESSION['loggedin']; ?>";
+            if (loggedin == "1") {
+                $("#user_login").text("<?php echo $_SESSION['username']; ?>");
+                $("#user_login").attr("href", "map_view.php");
+                $("#user_login_sidebar").text("<?php echo $_SESSION['username']; ?>");
+                $("#user_login_sidebar").attr("href", "map_view.php");
+                $("#help_sidebar").after(
+                    '<a class="w3-bar-item w3-button w3-hover-black" href="logout.php">Cerrar Sesión</a>');
+            } else {
+                $("#user_login").text("Acceder");
+            }
+
+            // Add padding to blanck space, before footer
+            function addBlanckSpace() {
+                $("#blank_space").css("padding-top", "0px");
+                var intViewportHeight = parent.innerHeight;
+                var mainContent = $("#main_content").height();
+                if (intViewportHeight > mainContent) {
+                    var height_css = intViewportHeight - mainContent;
+                    height_css = height_css.toString();
+                    $("#blank_space").css("padding-top", height_css + "px");
+                } else {
+                    $("#blank_space").css("padding-top", "0px");
+                }
+            }
+            addBlanckSpace();
+            $(window).on('resize', addBlanckSpace);
+        }
+    </script>
 
 </body>
 

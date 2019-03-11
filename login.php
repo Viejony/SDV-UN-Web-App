@@ -22,7 +22,9 @@ else {
 <link rel="stylesheet" href="ui/font-awesome.min.css">
 <link rel="stylesheet" href="ui/bootstrap.min.css" crossorigin="anonymous">
 <link rel="stylesheet" href="ui/custom.css">
-<link href="favicon.png" rel="icon" type="image/x-icon" />
+<link href="pictures/favicon.png" rel="icon" type="image/x-icon" />
+
+<script src="libs/jquery.min.js"></script>
 
 <style>
     html,
@@ -74,7 +76,7 @@ else {
     <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
     <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
-    <div class="w3-main" style="margin-left:250px">
+    <div class="w3-main" style="margin-left:250px" id="main_content">
 
         <div class="w3-row w3-padding-64">
             <div class="w3-container">
@@ -110,11 +112,13 @@ else {
             </div>
         </div>
 
+        <!-- Blank Space, used to adjust the view if screen is taller than the content-->
+        <div id="blank_space" style="padding-top:0px;"></div>
 
         <!-- Footer: this place contains the UNAL logo and name of the department-->
         <footer id="Footer">
             <div class="w3-container w3-theme-l2 w3-padding-16 ">
-                <img src="unal_logo_white.png" width=150 />
+                <img src="pictures/unal_logo_white.png" width=150 />
             </div>
 
             <div class="w3-container w3-theme-l1 w3-padding-8">
@@ -166,6 +170,22 @@ else {
             } else {
                 $("#user_login").text("Acceder");
             }
+
+            // Add padding to blanck space, before footer
+            function addBlanckSpace() {
+                $("#blank_space").css("padding-top", "0px");
+                var intViewportHeight = parent.innerHeight;
+                var mainContent = $("#main_content").height();
+                if (intViewportHeight > mainContent) {
+                    var height_css = intViewportHeight - mainContent;
+                    height_css = height_css.toString();
+                    $("#blank_space").css("padding-top", height_css + "px");
+                } else {
+                    $("#blank_space").css("padding-top", "0px");
+                }
+            }
+            addBlanckSpace();
+            $(window).on('resize', addBlanckSpace);
 
         }
     </script>

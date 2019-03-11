@@ -8,6 +8,7 @@ var KEYBOARDTELEOP = KEYBOARDTELEOP || {
 
 /**
  * @author Russell Toris - rctoris@wpi.edu
+ * @author Jhonyfer Angarita M. jhangaritamo@unal.edu.co
  */
 
 /**

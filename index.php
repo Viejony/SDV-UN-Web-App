@@ -21,7 +21,7 @@ else {
 <link rel="stylesheet" href="ui/w3-theme-black.css">
 <link rel="stylesheet" href="ui/Roboto.css">
 <link rel="stylesheet" href="ui/font-awesome.min.css">
-<link href="favicon.png" rel="icon" type="image/x-icon" />
+<link href="pictures/favicon.png" rel="icon" type="image/x-icon" />
 
 <script src="libs/jquery.min.js"></script>
 <script src="libs/check_session.js"></script>
@@ -49,15 +49,18 @@ else {
     div.polaroid {
         width: 80%;
         background-color: white;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         margin-bottom: 25px;
+    }
+
+    div.polaroid:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     }
 
     div.container {
         text-align: center;
         padding: 10px 20px;
     }
-
 </style>
 
 <body onload="init()">
@@ -65,7 +68,8 @@ else {
     <!-- Navbar -->
     <div class="w3-top">
         <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
-            <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+            <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)"
+                onclick="w3_open()"><i class="fa fa-bars"></i></a>
             <a href="index.php" class="w3-bar-item w3-button w3-theme-l1">SDV UN</a>
             <a href="login.php" class="w3-bar-item w3-button w3-theme-white" id="user_login"></a>
             <a href="help.php" class="w3-bar-item w3-button w3-theme-white">Ayuda</a>
@@ -74,7 +78,8 @@ else {
 
     <!-- Sidebar -->
     <nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left" id="mySidebar">
-        <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
+        <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large"
+            title="Close Menu">
             <i class="fa fa-remove"></i>
         </a>
         <h4 class="w3-bar-item"><b>Menu</b></h4>
@@ -87,27 +92,37 @@ else {
     <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
     <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
-    <div class="w3-main" style="margin-left:250px">
+    <div class="w3-main" style="margin-left:250px" id="main_content">
 
         <div class="w3-row w3-padding-64">
-            
+
             <div class="w3-row">
                 <div class="w3-twothird w3-container">
                     <h3 class="w3-text-teal">SDV UN</h3>
-                </div>  
+                </div>
             </div>
 
             <div class="w3-row">
                 <div class="w3-twothird w3-container">
-                    <p>El SDV-UN es un vehículo auto manejado que hace parte del LabFabEx en la Universidad Nacional de Colombia. Usa el software ROS para la navegación junto a múltiples sensores que le permiten posicionarse en su entrono de trabajo con gran precisión. Con este aplicativo, puedes conectarte al software ROS de uno de los SDV y controlarlo de forma remota.</p>
+                    <p>El SDV-UN es un vehículo auto manejado que hace parte del LabFabEx en la Universidad Nacional de
+                        Colombia. Usa el software ROS para la navegación junto a múltiples sensores que le permiten
+                        posicionarse en su entrono de trabajo con gran precisión. Con este aplicativo, puedes
+                        conectarte al software ROS de uno de los SDV y controlarlo de forma remota.</p>
 
-                    <p>Si no sabes como iniciar el SDV, en este <a href="https://gitlab.com/jfpinedap/Mobile-Robotics-User-Manual" target="_blank">enlace</a> puedes encontrar un tutorial detallado de la puesta en marcha del SDV.</p>
+                    <p>Si no sabes como iniciar el SDV, en este <a href="https://gitlab.com/jfpinedap/Mobile-Robotics-User-Manual"
+                            target="_blank">enlace</a> puedes encontrar un tutorial detallado de la puesta en marcha
+                        del SDV.</p>
 
-                    <p>Debes acceder al servicio usando un usuario y una contraseña. Estas credenciales son las mismas que usan los SDV.</p>
+                    <p>Debes acceder al servicio usando un usuario y una contraseña. Estas credenciales son las mismas
+                        que usan los SDV.</p>
                 </div>
+
                 <div class="w3-third w3-container">
-                    <div class="polaroid">
+                    <div class="polaroid w3-auto">
                         <img src="pictures/sdv_a.webp" alt="SDV-UN" style="width:100%">
+                        <div class="container">
+                            <p>SDV-UN-3</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -115,11 +130,14 @@ else {
 
         </div>
 
+        <!-- Blank Space, used to adjust the view if screen is taller than the content-->
+        <div id="blank_space" style="padding-top:0px;"></div>
+
 
         <!-- Footer: this place contains the UNAL logo and name of the department-->
         <footer id="Footer">
             <div class="w3-container w3-theme-l2 w3-padding-16 ">
-                <img src="unal_logo_white.png" width=150 />
+                <img src="pictures/unal_logo_white.png" width=150 />
             </div>
 
             <div class="w3-container w3-theme-l1 w3-padding-8">
@@ -166,13 +184,31 @@ else {
                 $("#user_login").attr("href", "map_view.php");
                 $("#user_login_sidebar").text("<?php echo $_SESSION['username']; ?>");
                 $("#user_login_sidebar").attr("href", "map_view.php");
-                $("#help_sidebar").after('<a class="w3-bar-item w3-button w3-hover-black" href="logout.php">Cerrar Sesión</a>');
+                $("#help_sidebar").after(
+                    '<a class="w3-bar-item w3-button w3-hover-black" href="logout.php">Cerrar Sesión</a>');
             } else {
                 $("#user_login").text("Acceder");
             }
 
-        }
+            // Add padding to blanck space, before footer
+            function addBlanckSpace() {
+                $("#blank_space").css("padding-top", "0px");
+                var intViewportHeight = parent.innerHeight;
+                var mainContent = $("#main_content").height();
+                if (intViewportHeight > mainContent) {
+                    var height_css = intViewportHeight - mainContent;
+                    height_css = height_css.toString();
+                    $("#blank_space").css("padding-top", height_css + "px");
+                } else {
+                    $("#blank_space").css("padding-top", "0px");
+                }
+            }
+            addBlanckSpace();
+            $(window).on('resize', addBlanckSpace);
 
+
+
+        }
     </script>
 
 </body>
