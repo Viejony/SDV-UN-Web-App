@@ -286,6 +286,9 @@ if($now > $_SESSION['expire']) {
         var conectionStatus = 0; // 0: no intentado, 1: exitosa, 2: erronea
         var sdv_ip = "";
 
+        // Loading sdv_ip from PHP session variable
+        sdv_ip = "<?php echo $_SESSION['sdv_ip']; ?>";
+
         /*
           This function contains all the ROS functions used in this page. These functions 
           only works if the page has been loaded.

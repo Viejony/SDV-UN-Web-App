@@ -47,7 +47,7 @@ if(password_verify($password, $hash)){
 } 
 else{
     echo "Usuario o Password incorrectos.";
-    echo "<br><a href='login.html'>Volver a Intentarlo</a>";
+    echo "<br><a href='login.php'>Volver a Intentarlo</a>";
 }
  mysqli_close($conexion); 
 ?>

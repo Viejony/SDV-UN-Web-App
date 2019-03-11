@@ -83,10 +83,10 @@ else {
 
                 <button class="collapsible">El software no se conecta con el SDV</button>
                 <div class="content">
-                    <p>Para que el software se conecte al SDV es necesario que esten corriendo en el SDV el siguiente
+                    <p>Para que el software se conecte al SDV es necesario que este corriendo en el SDV el siguiente
                         software:</p>
-                    <li>agv_nav: archivo .launch que ejecuta todos los nodos de navegación</li>
-                    <li>rosbridge_websocket: nodo que permite la conección con aplicaciones remotas.</li>
+                    <li>agv_nav.launch: archivo de ROS que ejecuta todos los nodos de navegación</li>
+                    <li>rosbridge_websocket: nodo que permite la conexión con aplicaciones remotas.</li>
                     <li>robot_pose_publisher: nodo que permite obtener información del SDV.</li>
                     <p>En este <a href="https://gitlab.com/jfpinedap/Mobile-Robotics-User-Manual" target="_blank">enlace</a>
                         puedes encontrar un tutorial detallado de la puesta en marcha del SDV. El software debe estar
@@ -121,33 +121,43 @@ else {
                     </ul>
                 </div>
 
-                <button class="collapsible">La posición del SDV no es la real</button>
+                <button class="collapsible">La posición del SDV no corresponde a la real</button>
                 <div class="content">
-                    <p>Puede que el SDV se haya inicializado en una ubicación incorrecta. Es necesario reiniciar los
-                        nodos de navegación (agv_nav.launch) desde el home del SDV.</p>
+                    <p>Es normal que el SDV presente cierto desfase con la posición real. Sin embargo, si el desfase
+                        es demasiado grande, puede que el SDV se haya inicializado en una ubicación incorrecta. Es
+                        necesario reiniciar los nodos de navegación (agv_nav.launch) desde el home del SDV. Pudes llevar 
+                        el SDV al home utilizando los botones del panel de operación manual o con el teclado 
+                        (teclas W,A,S y D).</p>
                 </div>
 
                 <button class="collapsible">El mapa no se visualiza</button>
                 <div class="content">
-                    <p>Si las condiciones de conección se cumplen, pero el mapa no carga, puede que el topic en el que
+                    <p>Si las condiciones de conexión se cumplen, pero el mapa no carga, puede que el topic en el que
                         se gestiona el servicio del mapa tenga un nombre distinto. El topic que usa esta aplicación es
-                        /map.</p>
+                        /map. Verifica en el SDV si este topic tiene ese nombre y esta activo.</p>
                 </div>
 
                 <button class="collapsible">El ícono del SDV no se observa</button>
                 <div class="content">
-                    <p>El topic necesario para la obtensión de la pose es /move_base. Si el nombre es distinto en el
-                        SDV, puede que esa sea la causa del problema.</p>
+                    <p>El topic necesario para la obtensión de la pose es /move_base.
+                        Si el nombre es distinto en el SDV, puede que esa sea la causa del problema.</p>
                 </div>
 
                 <button class="collapsible">El botón de parada no funciona</button>
                 <div class="content">
-                    <p>El topic para las paradas de emergencia es /move_base/cancel. Si en el SDV este topic tiene otro
-                        nombre, es necesario renombar el topic.</p>
+                    <p>El topic para las paradas de emergencia es /move_base/cancel.
+                        Si en el SDV este topic tiene otro nombre, es necesario renombar el topic.</p>
                 </div>
 
-
+                <button class="collapsible">El panel de operación manual no funciona</button>
+                <div class="content">
+                    <p>Para el correcto funcionamiento de este panel, debe existir comunicación con el
+                        topic /mobile_base/commands/velocity. Si en el SDV no existe este topic o
+                        tiene un nombre distinto, puede originar problemas de funcionamiento.</p>
+                </div>
             </div>
+
+        <!-- END ROW -->
         </div>
 
         <!-- Blank Space, used to adjust the view if screen is taller than the content-->
@@ -164,7 +174,7 @@ else {
             </div>
         </footer>
 
-        <!-- END MAIN -->
+    <!-- END MAIN -->
     </div>
 
     <script>
