@@ -142,12 +142,13 @@ KEYBOARDTELEOP.Teleop = function (options) {
 
     // handle the key
     var body = document.getElementsByTagName('body')[0];
-    body.addEventListener('buttonDown', function (e) {
+    body.addEventListener('keydown', function (e) {
+        
         if (that.enable) {
             handleKey(e.keyCode, true);
         }
     }, false);
-    body.addEventListener('buttonUp', function (e) {
+    body.addEventListener('keyup', function (e) {
         if (that.enable) {
             handleKey(e.keyCode, false);
         }
