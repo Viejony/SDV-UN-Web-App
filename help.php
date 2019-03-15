@@ -10,7 +10,7 @@ else {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<title>SDV UN</title>
+<title>SDV UN: Ayuda</title>
 <meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -66,6 +66,7 @@ else {
         <h4 class="w3-bar-item"><b>Menu</b></h4>
         <a class="w3-bar-item w3-button w3-hover-black" href="login.php" id="user_login_sidebar">Acceder</a>
         <a class="w3-bar-item w3-button w3-hover-black" href="help.php" id="help_sidebar">Ayuda</a>
+        <a class="w3-bar-item w3-button w3-hover-black" href="docs.php" id="docs_sidebar">Documentación</a>
         <!-- Here is the Close Session link, that is only visible when there is a session opened -->
     </nav>
 
@@ -77,9 +78,29 @@ else {
 
         <div class="w3-row w3-padding-64">
 
-            <div class="w3-container w3-twothird">
+            <div class="w3-container">
 
-                <h3 class="w3-text-teal">Ayuda</h3>
+                <h3 class="w3-text-teal">Tutoriales</h3>
+
+                <p>
+                    <a href="https://gitlab.com/jfpinedap/Mobile-Robotics-User-Manual" target="_blank">Puesta en marcha del SDV:</a>
+                     Tutorial con los pasos y recomendaciones para un arranque exitoso del SDV
+                </p>
+
+                <p>
+                    <a href="https://vitux.com/how-to-install-xampp-on-your-ubuntu-18-04-lts-system/" target="_blank">Instalación de XAMPP:</a>
+                     Tutorial con las instrucciones necesarias para instalar XAMPP en Ubuntu.
+                </p>
+
+                <p>
+                    <a href="docs/SDV-UN-Web-App_Tutorial.pdf" target="_blank">Tutorial de uso de la aplicación web:</a>
+                     Tutorial que explica los distintos apartados de esta aplicación.
+                </p>
+                
+
+                    
+
+                <h3 class="w3-text-teal">Preguntas frecuentes</h3>
 
                 <button class="collapsible">El software no se conecta con el SDV</button>
                 <div class="content">
@@ -229,7 +250,7 @@ else {
                 $("#user_login").attr("href", "map_view.php");
                 $("#user_login_sidebar").text("<?php echo $_SESSION['username']; ?>");
                 $("#user_login_sidebar").attr("href", "map_view.php");
-                $("#help_sidebar").after(
+                $("#docs_sidebar").after(
                     '<a class="w3-bar-item w3-button w3-hover-black" href="logout.php">Cerrar Sesión</a>');
             } else {
                 $("#user_login").text("Acceder");

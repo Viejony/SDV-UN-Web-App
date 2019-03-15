@@ -7,24 +7,21 @@ else {
     $_SESSION['username'] = "";
     $_SESSION['sdv_ip'] = "";
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-<title>SDV UN</title>
-
+<title>SDV UN: Documentación</title>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="ui/w3.css">
 <link rel="stylesheet" href="ui/w3-theme-black.css">
 <link rel="stylesheet" href="ui/Roboto.css">
 <link rel="stylesheet" href="ui/font-awesome.min.css">
+<link rel="stylesheet" href="ui/collapsible.css">
 <link href="pictures/favicon.png" rel="icon" type="image/x-icon" />
 
 <script src="libs/jquery.min.js"></script>
-<script src="libs/check_session.js"></script>
 
 <style>
     html,
@@ -45,22 +42,6 @@ else {
         bottom: 0;
         height: inherit;
     }
-
-    div.polaroid {
-        width: 80%;
-        background-color: white;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        margin-bottom: 25px;
-    }
-
-    div.polaroid:hover {
-        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    }
-
-    div.container {
-        text-align: center;
-        padding: 10px 20px;
-    }
 </style>
 
 <body onload="init()">
@@ -70,7 +51,7 @@ else {
         <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
             <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)"
                 onclick="w3_open()"><i class="fa fa-bars"></i></a>
-            <a href="index.php" class="w3-bar-item w3-button w3-theme-l1">SDV UN</a>
+            <a href="index.php" class="w3-bar-item w3-button w3-hide-small w3-hover-white">SDV UN</a>
             <a href="login.php" class="w3-bar-item w3-button w3-theme-white" id="user_login"></a>
             <a href="help.php" class="w3-bar-item w3-button w3-theme-white">Ayuda</a>
         </div>
@@ -97,43 +78,45 @@ else {
 
         <div class="w3-row w3-padding-64">
 
-            <div class="w3-row">
-                <div class="w3-twothird w3-container">
-                    <h3 class="w3-text-teal">SDV UN</h3>
-                </div>
+            <div class="w3-container w3-twothird">
+                
+                <h3 class="w3-text-teal">Documentación</h3>
+
+                <p>
+                    <a href="http://robotwebtools.org/jsdoc/roslibjs/current/index.html" target="_blank">roslibjs</a>
+                    : Biblioteca de javascript que permite la comunicación con ROS por medio de Websockets
+                </p>
+
+                <p>
+                    <a href="http://robotwebtools.org/jsdoc/nav2djs/current/" target="_blank">nav2djs</a>
+                    : Biblioteca de javascript que permite visualizar la nevegación del robot en el navegador.
+                </p>
+
+                <p>
+                    <a href="docs/keyboardteleop/index.html" target="_blank">keyboardteleop</a>
+                    : Biblioteca de javascript que permite enviar comandos de velocidad a ROS por medio del teclado o botones en la página web.
+                </p>
+
+                <p>
+                    <a href="docs/map_view/index.html" target="_blank">map_view</a>
+                    : Archivo en javascript que configura la funcionalidad (mapa y botones) de este proyecto.
+                </p>
+
+                <p>
+                    <a href="https://github.com/Viejony/SDV-UN-Web-App" target="_blank">SDV-UN-Web-App</a>
+                    : Repositorio de la aplicación web
+                </p>
+
+
+                
+
             </div>
 
-            <div class="w3-row">
-                <div class="w3-twothird w3-container">
-                    <p>El SDV-UN es un vehículo autónomo que hace parte del LabFabEx en la Universidad Nacional de
-                        Colombia. Usa el software ROS para la navegación junto a múltiples sensores que le permiten
-                        posicionarse en su entrono de trabajo con gran precisión. Con este aplicativo, puedes
-                        conectarte al software ROS de uno de los SDV y controlarlo de forma remota.</p>
-
-                    <p>Si no sabes como iniciar el SDV, en este <a href="https://gitlab.com/jfpinedap/Mobile-Robotics-User-Manual"
-                            target="_blank">enlace</a> puedes encontrar un tutorial detallado de la puesta en marcha
-                        del SDV.</p>
-
-                    <p>Debes acceder al servicio usando un usuario y una contraseña. Estas credenciales son las mismas
-                        que usan los SDV.</p>
-                </div>
-
-                <div class="w3-third w3-container">
-                    <div class="polaroid w3-auto">
-                        <img src="pictures/sdv_a.webp" alt="SDV-UN" style="width:100%">
-                        <div class="container">
-                            <p>SDV-UN-3</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
+        <!-- END ROW -->
         </div>
 
         <!-- Blank Space, used to adjust the view if screen is taller than the content-->
         <div id="blank_space" style="padding-top:0px;"></div>
-
 
         <!-- Footer: this place contains the UNAL logo and name of the department-->
         <footer id="Footer">
@@ -146,7 +129,7 @@ else {
             </div>
         </footer>
 
-        <!-- END MAIN -->
+    <!-- END MAIN -->
     </div>
 
     <script>
@@ -171,6 +154,22 @@ else {
         function w3_close() {
             mySidebar.style.display = "none";
             overlayBg.style.display = "none";
+        }
+
+        // Collapsible tags
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
         }
 
         /**
@@ -206,8 +205,6 @@ else {
             }
             addBlanckSpace();
             $(window).on('resize', addBlanckSpace);
-
-
 
         }
     </script>

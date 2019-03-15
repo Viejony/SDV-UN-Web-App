@@ -69,6 +69,7 @@ else {
         <h4 class="w3-bar-item"><b>Menu</b></h4>
         <a class="w3-bar-item w3-button w3-hover-black" href="login.php" id="user_login_sidebar">Acceder</a>
         <a class="w3-bar-item w3-button w3-hover-black" href="help.php" id="help_sidebar">Ayuda</a>
+        <a class="w3-bar-item w3-button w3-hover-black" href="docs.php" id="docs_sidebar">Documentación</a>
         <!-- Here is the Close Session link, that is only visible when there is a session opened -->
     </nav>
 
@@ -165,7 +166,7 @@ else {
                 $("#user_login").attr("href", "map_view.php");
                 $("#user_login_sidebar").text("<?php echo $_SESSION['username']; ?>");
                 $("#user_login_sidebar").attr("href", "map_view.php");
-                $("#help_sidebar").after(
+                $("#docs_sidebar").after(
                     '<a class="w3-bar-item w3-button w3-hover-black" href="logout.php">Cerrar Sesión</a>');
             } else {
                 $("#user_login").text("Acceder");
