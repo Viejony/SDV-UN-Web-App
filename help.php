@@ -97,9 +97,6 @@ else {
                      Tutorial que explica los distintos apartados de esta aplicación.
                 </p>
                 
-
-                    
-
                 <h3 class="w3-text-teal">Preguntas frecuentes</h3>
 
                 <button class="collapsible">El software no se conecta con el SDV</button>
@@ -108,11 +105,14 @@ else {
                         software:</p>
                     <li>agv_nav.launch: archivo de ROS que ejecuta todos los nodos de navegación</li>
                     <li>rosbridge_websocket: nodo que permite la conexión con aplicaciones remotas.</li>
-                    <li>robot_pose_publisher: nodo que permite obtener información del SDV.</li>
+                    <li>robot_pose_publisher: nodo que permite obtener información del SDV.
+                    
+                    </li>
                     <p>En este <a href="https://gitlab.com/jfpinedap/Mobile-Robotics-User-Manual" target="_blank">enlace</a>
                         puedes encontrar un tutorial detallado de la puesta en marcha del SDV. El software debe estar
                         en un servidor conectado a la red del LabFabEx.</p>
                 </div>
+                <p> </p>
 
                 <button class="collapsible">El software no funciona correctamente</button>
                 <div class="content">
@@ -121,6 +121,7 @@ else {
                         el software necesario.</p>
 
                 </div>
+                <p> </p>
 
                 <button class="collapsible">No se puede agregar un usuario</button>
                 <div class="content">
@@ -141,6 +142,7 @@ else {
                         </li>
                     </ul>
                 </div>
+                <p> </p>
 
                 <button class="collapsible">La posición del SDV no corresponde a la real</button>
                 <div class="content">
@@ -150,6 +152,7 @@ else {
                         el SDV al home utilizando los botones del panel de operación manual o con el teclado 
                         (teclas W,A,S y D).</p>
                 </div>
+                <p> </p>
 
                 <button class="collapsible">El mapa no se visualiza</button>
                 <div class="content">
@@ -157,18 +160,21 @@ else {
                         se gestiona el servicio del mapa tenga un nombre distinto. El topic que usa esta aplicación es
                         /map. Verifica en el SDV si este topic tiene ese nombre y esta activo.</p>
                 </div>
+                <p> </p>
 
                 <button class="collapsible">El ícono del SDV no se observa</button>
                 <div class="content">
                     <p>El topic necesario para la obtensión de la pose es /move_base.
                         Si el nombre es distinto en el SDV, puede que esa sea la causa del problema.</p>
                 </div>
+                <p> </p>
 
                 <button class="collapsible">El botón de parada no funciona</button>
                 <div class="content">
                     <p>El topic para las paradas de emergencia es /move_base/cancel.
                         Si en el SDV este topic tiene otro nombre, es necesario renombar el topic.</p>
                 </div>
+                <p> </p>
 
                 <button class="collapsible">El panel de operación manual no funciona</button>
                 <div class="content">
@@ -176,6 +182,8 @@ else {
                         topic /mobile_base/commands/velocity. Si en el SDV no existe este topic o
                         tiene un nombre distinto, puede originar problemas de funcionamiento.</p>
                 </div>
+                <p> </p>
+
             </div>
 
         <!-- END ROW -->

@@ -11,9 +11,9 @@ On Windows, download the installer [here](https://www.apachefriends.org/es/index
 
 ## Loading project in XAMPP
 1. Go to XAMPP folder. On Ubuntu, this folder typically is ```/opt/lampp```. On Windows, this folder can be ```C:\xampp```. 
-2. There is a folder called htdocs. Go to that folder.
-3. Clone this project using git: ```git clone https://github.com/Viejony/SDV-UN-Web-App```
-3. Rename the folder ```SDV-UN-Web-App``` to ```SDV```. This operatión simplifies the name of the webpage.
+2. There is a folder named htdocs. Go to that folder.
+3. Inside htdocs, clone this project using git: ```git clone https://github.com/Viejony/SDV-UN-Web-App```
+3. Rename the folder ```SDV-UN-Web-App``` to ```SDV```. This operatión simplifies the URL name in the browser.
 
 
 ## SQL Database
