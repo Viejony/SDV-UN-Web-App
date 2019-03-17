@@ -42,6 +42,17 @@ else {
         bottom: 0;
         height: inherit;
     }
+
+    div.polaroid {
+        width: 80%;
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        margin-bottom: 25px;
+    }
+
+    div.polaroid:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
 </style>
 
 <body onload="init()">
@@ -82,21 +93,64 @@ else {
 
                 <h3 class="w3-text-teal">Tutoriales</h3>
 
-                <p>
-                    <a href="https://gitlab.com/jfpinedap/Mobile-Robotics-User-Manual" target="_blank">Puesta en marcha del SDV:</a>
-                     Tutorial con los pasos y recomendaciones para un arranque exitoso del SDV
-                </p>
+                <div class="w3-third w3-container">
+                    <div class="polaroid w3-auto">
+                        <a href="https://gitlab.com/jfpinedap/Mobile-Robotics-User-Manual" target="_blank">
+                            <img src="pictures/sdv_switches.webp" alt="SDV-UN" style="width:100%" >
+                        </a>
+                        <div class="w3-container w3-white">
+                            <p><b>
+                                <a href="https://gitlab.com/jfpinedap/Mobile-Robotics-User-Manual" target="_blank">Puesta en marcha del SDV</a>
+                            </b></p>
+                        <p>Tutorial con los pasos y recomendaciones para un arranque exitoso del SDV</p>
+                    </div>
+                    </div>
+                </div>
 
-                <p>
-                    <a href="https://vitux.com/how-to-install-xampp-on-your-ubuntu-18-04-lts-system/" target="_blank">Instalación de XAMPP:</a>
-                     Tutorial con las instrucciones necesarias para instalar XAMPP en Ubuntu.
-                </p>
+                <div class="w3-third w3-container">
+                    <div class="polaroid w3-auto">
+                        <a href="https://vitux.com/how-to-install-xampp-on-your-ubuntu-18-04-lts-system/" target="_blank">
+                            <img src="pictures/xampp.webp" alt="SDV-UN" style="width:100%">
+                        </a>
+                        <div class="w3-container w3-white">
+                        <p><b>
+                            <a href="https://vitux.com/how-to-install-xampp-on-your-ubuntu-18-04-lts-system/" target="_blank">Instalación de XAMPP</a>
+                        </b></p>
+                        <p>Tutorial con las instrucciones necesarias para instalar XAMPP en Ubuntu.</p>
+                    </div>
+                    </div>
+                </div>
 
-                <p>
-                    <a href="docs/SDV-UN-Web-App_Tutorial.pdf" target="_blank">Tutorial de uso de la aplicación web:</a>
-                     Tutorial que explica los distintos apartados de esta aplicación.
-                </p>
-                
+                <div class="w3-third w3-container">
+                    <div class="polaroid w3-auto">
+                        <a href="docs/SDV-UN-Web-App_Tutorial.pdf" target="_blank">
+                            <img src="pictures/app.webp" alt="SDV-UN" style="width:100%">
+                        </a>
+                        <div class="w3-container w3-white">
+                        <p><b>
+                            <a href="docs/SDV-UN-Web-App_Tutorial.pdf" target="_blank">Tutorial de la página web</a>
+                        </b></p>
+                        <p>Tutorial que explica los distintos apartados de esta aplicación web.</p>
+                    </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="w3-row">
+            <div class="w3-container">
+                <h3 class="w3-text-teal">Video tutorial</h3>
+                <div class="w3-twothird w3-container">
+                    <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/NwNL5vKip0I?rel=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="w3-row">
+
+            <div class="w3-container">
                 <h3 class="w3-text-teal">Preguntas frecuentes</h3>
 
                 <button class="collapsible">El software no se conecta con el SDV</button>
@@ -106,7 +160,7 @@ else {
                     <li>agv_nav.launch: archivo de ROS que ejecuta todos los nodos de navegación</li>
                     <li>rosbridge_websocket: nodo que permite la conexión con aplicaciones remotas.</li>
                     <li>robot_pose_publisher: nodo que permite obtener información del SDV.
-                    
+
                     </li>
                     <p>En este <a href="https://gitlab.com/jfpinedap/Mobile-Robotics-User-Manual" target="_blank">enlace</a>
                         puedes encontrar un tutorial detallado de la puesta en marcha del SDV. El software debe estar
@@ -148,8 +202,9 @@ else {
                 <div class="content">
                     <p>Es normal que el SDV presente cierto desfase con la posición real. Sin embargo, si el desfase
                         es demasiado grande, puede que el SDV se haya inicializado en una ubicación incorrecta. Es
-                        necesario reiniciar los nodos de navegación (agv_nav.launch) desde el home del SDV. Pudes llevar 
-                        el SDV al home utilizando los botones del panel de operación manual o con el teclado 
+                        necesario reiniciar los nodos de navegación (agv_nav.launch) desde el home del SDV. Pudes
+                        llevar
+                        el SDV al home utilizando los botones del panel de operación manual o con el teclado
                         (teclas W,A,S y D).</p>
                 </div>
                 <p> </p>
@@ -186,7 +241,7 @@ else {
 
             </div>
 
-        <!-- END ROW -->
+            <!-- END ROW -->
         </div>
 
         <!-- Blank Space, used to adjust the view if screen is taller than the content-->
@@ -203,7 +258,7 @@ else {
             </div>
         </footer>
 
-    <!-- END MAIN -->
+        <!-- END MAIN -->
     </div>
 
     <script>
