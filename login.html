@@ -1,17 +1,8 @@
-<?php 
-session_start();
-if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-}
-else {
-    $_SESSION['loggedin'] = false;
-    $_SESSION['username'] = "";
-    $_SESSION['sdv_ip'] = "";
-}
-?>
 <!DOCTYPE html>
-<title>SDV UN</title>
-
+<html lang="en">
+<title>Acceder</title>
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href="ui/w3.css">
@@ -52,9 +43,9 @@ else {
         <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
             <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)"
                 onclick="w3_open()"><i class="fa fa-bars"></i></a>
-            <a href="index.php" class="w3-bar-item w3-button w3-theme-white">SDV UN</a>
-            <a href="login.php" class="w3-bar-item w3-button w3-theme-white" id="user_login">Acceder</a>
-            <a href="help.php" class="w3-bar-item w3-button w3-theme-white">Ayuda</a>
+            <a href="index.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">SDV UN</a>
+            <a href="login.html" class="w3-bar-item w3-button w3-theme-l1">Acceder</a>
+            <a href="help.html" class="w3-bar-item w3-button w3-theme-white">Ayuda</a>
         </div>
     </div>
 
@@ -65,8 +56,9 @@ else {
             <i class="fa fa-remove"></i>
         </a>
         <h4 class="w3-bar-item"><b>Menu</b></h4>
-        <a class="w3-bar-item w3-button w3-hover-black" href="login.php" id="user_login_sidebar">Acceder</a>
-        <a class="w3-bar-item w3-button w3-hover-black" href="help.php" id="help_sidebar">Ayuda</a>
+        <a class="w3-bar-item w3-button w3-hover-black" href="login.html" id="user_login_sidebar">Acceder</a>
+        <a class="w3-bar-item w3-button w3-hover-black" href="help.html" id="help_sidebar">Ayuda</a>
+        <a class="w3-bar-item w3-button w3-hover-black" href="docs.html" id="docs_sidebar">Documentación</a>
         <!-- Here is the Close Session link, that is only visible when there is a session opened -->
     </nav>
 
@@ -77,47 +69,12 @@ else {
     <div class="w3-main" style="margin-left:250px" id="main_content">
 
         <div class="w3-row w3-padding-64">
+            <div class="w3-container">
+                <h3 class="w3-text-teal">Acceder</h3>
 
-            <div class="container">
-
-                <h3 class="w3-text-teal">Crear un usuario</h3>
-
-                <form class="form-horizontal" action="create_user.php" method="post">
-
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="email">Usuario</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" maxlength="20" placeholder="Ingresa tu usuario"
-                                name="username" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="email">IP</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" maxlength="50" id="email" placeholder="Dirección IP"
-                                name="ip" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="pwd">Contraseña:</label>
-                        <div class="col-sm-10">
-                            <input type="password" class="form-control" maxlength="30" id="pwd" placeholder="Ingresa una Contraseña"
-                                name="password" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-success btn-block">Crear</button>
-                        </div>
-                    </div>
-
-                </form>
+                
 
             </div>
-
         </div>
 
         <!-- Blank Space, used to adjust the view if screen is taller than the content-->
@@ -161,22 +118,6 @@ else {
             overlayBg.style.display = "none";
         }
 
-        // Collapsible tags
-        var coll = document.getElementsByClassName("collapsible");
-        var i;
-
-        for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function () {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.maxHeight) {
-                    content.style.maxHeight = null;
-                } else {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                }
-            });
-        }
-
         /**
          * Setup all visualization elements when the page is loaded. 
          */
@@ -189,7 +130,7 @@ else {
                 $("#user_login").attr("href", "map_view.php");
                 $("#user_login_sidebar").text("<?php echo $_SESSION['username']; ?>");
                 $("#user_login_sidebar").attr("href", "map_view.php");
-                $("#help_sidebar").after(
+                $("#docs_sidebar").after(
                     '<a class="w3-bar-item w3-button w3-hover-black" href="logout.php">Cerrar Sesión</a>');
             } else {
                 $("#user_login").text("Acceder");
@@ -210,6 +151,7 @@ else {
             }
             addBlanckSpace();
             $(window).on('resize', addBlanckSpace);
+
         }
     </script>
 
