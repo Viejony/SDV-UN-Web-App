@@ -12,6 +12,7 @@
 <link href="pictures/favicon.png" rel="icon" type="image/x-icon" />
 
 <script src="libs/jquery.min.js"></script>
+<script src="libs/local_storage.js"></script>
 
 <style>
     html,
@@ -52,9 +53,10 @@
         <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
             <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)"
                 onclick="w3_open()"><i class="fa fa-bars"></i></a>
-            <a href="index.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">SDV UN</a>
-            <a href="login.html" class="w3-bar-item w3-button w3-theme-white" id="user_login"></a>
-            <a href="help.html" class="w3-bar-item w3-button w3-theme-l1">Ayuda</a>
+            <a href="index.html" class="w3-bar-item w3-button w3-theme-white">SDV UN</a>
+            <a id="login_navbar_link" href="login.html" class="w3-bar-item w3-button w3-theme-white" id="user_login">Acceder</a>
+            <!-- map_view_navbar_link -->
+            <a href="help.html" class="w3-bar-item w3-button w3-theme-l1 w3-hide-small">Ayuda</a>
         </div>
     </div>
 
@@ -158,35 +160,6 @@
                 </div>
                 <p> </p>
 
-                <button class="collapsible">El software no funciona correctamente</button>
-                <div class="content">
-                    <p>Es necesario que la aplicación se encuentre montada en un servidor Apache con PHP y una bases de
-                        datos mySQL. Para pruebas, es recomendable usar la aplicación XAMMP, la cual permite ejecutar
-                        el software necesario.</p>
-
-                </div>
-                <p> </p>
-
-                <button class="collapsible">No se puede agregar un usuario</button>
-                <div class="content">
-                    <p>Es necesario montar una base de datos para la gestón de los usuarios. XAMPP tiene la herramienta
-                        phpMyAdmin, la cual permite construir y gestionar bases de datos. La base de datos debe tener
-                        la siguiente estructura:</p>
-                    <ul>
-                        <li>Nombre: sdv_un</li>
-                        <li>Tabla: users</li>
-                        <li>Columnas:
-                            <ul>
-                                <li>id: int, llave primaria, autoincrementable</li>
-                                <li>username: varchar</li>
-                                <li>password: varchar</li>
-                                <li>ip: varchar</li>
-                                <li>status: varchar</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <p> </p>
 
                 <button class="collapsible">La posición del SDV no corresponde a la real</button>
                 <div class="content">
@@ -296,19 +269,6 @@
          */
         function init() {
 
-            // Verify if some session is active and change the link and name of the login link
-            var loggedin = "<?php echo $_SESSION['loggedin']; ?>";
-            if (loggedin == "1") {
-                $("#user_login").text("<?php echo $_SESSION['username']; ?>");
-                $("#user_login").attr("href", "map_view.php");
-                $("#user_login_sidebar").text("<?php echo $_SESSION['username']; ?>");
-                $("#user_login_sidebar").attr("href", "map_view.php");
-                $("#docs_sidebar").after(
-                    '<a class="w3-bar-item w3-button w3-hover-black" href="logout.php">Cerrar Sesión</a>');
-            } else {
-                $("#user_login").text("Acceder");
-            }
-
             // Add padding to blanck space, before footer
             function addBlanckSpace() {
                 $("#blank_space").css("padding-top", "0px");
@@ -324,6 +284,12 @@
             }
             addBlanckSpace();
             $(window).on('resize', addBlanckSpace);
+
+            /** 
+            Verify if there is a IP Direction Saved on WebStorage and add a link
+            to the map in the navbar.
+            **/
+            checkIPDirection();
 
         }
     </script>

@@ -14,6 +14,7 @@
 <link href="pictures/favicon.png" rel="icon" type="image/x-icon" />
 
 <script src="libs/jquery.min.js"></script>
+<script src="libs/local_storage.js"></script>
 
 <style>
     html,
@@ -43,9 +44,10 @@
         <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
             <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)"
                 onclick="w3_open()"><i class="fa fa-bars"></i></a>
-            <a href="index.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">SDV UN</a>
-            <a href="login.html" class="w3-bar-item w3-button w3-theme-l1">Acceder</a>
-            <a href="help.html" class="w3-bar-item w3-button w3-theme-white">Ayuda</a>
+            <a href="index.html" class="w3-bar-item w3-button w3-theme-white">SDV UN</a>
+            <a id="login_navbar_link" href="login.html" class="w3-bar-item w3-button w3-theme-l1">Acceder</a>
+            <!-- Here comes map_view_navbar_link-->
+            <a href="help.html" class="w3-bar-item w3-button w3-theme-white w3-hide-small">Ayuda</a>
         </div>
     </div>
 
@@ -72,8 +74,27 @@
             <div class="w3-container">
                 <h3 class="w3-text-teal">Acceder</h3>
 
-                
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="loginBox">
 
+                                    <form>
+                                        <div class="form-group">
+                                            <input id="ip_input" type="text" class="form-control input-lg" name="ip_direction"
+                                                placeholder="Dirección IP" required>
+                                        </div>
+                                        <button id="save_button" type="button" class="btn btn-success btn-block">Guardar</button>
+                                    </form>
+
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
 
@@ -123,19 +144,6 @@
          */
         function init() {
 
-            // Verify if some session is active and change the link and name of the login link
-            var loggedin = "<?php echo $_SESSION['loggedin']; ?>";
-            if (loggedin == "1") {
-                $("#user_login").text("<?php echo $_SESSION['username']; ?>");
-                $("#user_login").attr("href", "map_view.php");
-                $("#user_login_sidebar").text("<?php echo $_SESSION['username']; ?>");
-                $("#user_login_sidebar").attr("href", "map_view.php");
-                $("#docs_sidebar").after(
-                    '<a class="w3-bar-item w3-button w3-hover-black" href="logout.php">Cerrar Sesión</a>');
-            } else {
-                $("#user_login").text("Acceder");
-            }
-
             // Add padding to blanck space, before footer
             function addBlanckSpace() {
                 $("#blank_space").css("padding-top", "0px");
@@ -151,6 +159,26 @@
             }
             addBlanckSpace();
             $(window).on('resize', addBlanckSpace);
+
+            /** 
+            Verify if there is a IP Direction Saved on WebStorage and add a link
+            to the map in the navbar.
+            **/
+            var sdv_IP_dir = checkIPDirection();
+            $("#ip_input").val(sdv_IP_dir);
+
+            // Bindind the Save Stop Button with saveIPDirection function.
+            $("#save_button").click(saveIPDirection);
+
+            /**
+             * saveIPDirection: Saves the IP Direction defined in the input.
+             * */
+            function saveIPDirection(){
+                sdv_IP_dir = $("#ip_input").val();
+                localStorage.setItem("sdv_IP_dir",sdv_IP_dir);
+                alert("Dirección IP guardada localmente: " + sdv_IP_dir);
+                checkIPDirection();
+            }
 
         }
     </script>

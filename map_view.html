@@ -15,6 +15,7 @@
 <script src="libs/jquery.animate-colors-min.js"></script>
 <script src="libs/animation.js"></script>
 <script src="libs/map_view.js"></script>
+<script src="libs/local_storage.js"></script>
 
 <link rel="stylesheet" href="ui/icon.css">
 <link rel="stylesheet" href="ui/w3-theme-black.css">
@@ -57,9 +58,10 @@
             <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large" href="javascript:void(0)"
                 onclick="w3_open()"><i class="fa fa-bars"></i></a>
             <a id="emergency_stop_button" class="w3-bar-item w3-button w3-right">Parar</a>
-            <a href="index.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">SDV UN</a>
-            <a href="map_view.html" class="w3-bar-item w3-button w3-theme-l1" id="user_login"></a>
-            <a href="help.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Ayuda</a>
+            <a href="index.html" class="w3-bar-item w3-button w3-theme-white">SDV UN</a>
+            <a id="login_navbar_link" href="login.html" class="w3-bar-item w3-button w3-theme-white w3-hide-small">Acceder</a>
+            <!-- map_view_nabvar_link-->
+            <a href="help.html" class="w3-bar-item w3-button w3-theme-white w3-hide-small">Ayuda</a>
         </div>
     </div>
 
@@ -259,8 +261,9 @@
         var conectionStatus = 0; // 0: no intentado, 1: exitosa, 2: erronea
         var sdv_ip = "";
 
-        // Loading sdv_ip from PHP session variable
-        sdv_ip = "<?php echo $_SESSION['sdv_ip']; ?>";
+        // Loading sdv_ip from LocalStorage
+        sdv_ip = checkIPDirection();
+
 
         /*
           This function contains all the ROS functions used in this page. These functions 
@@ -268,21 +271,14 @@
         */
         function init() {
 
-            // Verify if some session is active and change the link and name of the login link
-            var loggedin = "<?php echo $_SESSION['loggedin']; ?>";
-            if (loggedin == "1") {
-                $("#user_login").text("<?php echo $_SESSION['username']; ?>");
-                $("#user_login").attr("href", "map_view.php");
-                $("#user_login_sidebar").text("<?php echo $_SESSION['username']; ?>");
-                $("#user_login_sidebar").attr("href", "map_view.php");
-                $("#docs_sidebar").after(
-                    '<a class="w3-bar-item w3-button w3-hover-black" href="logout.php">Cerrar Sesión</a>');
-            } else {
-                $("#user_login").text("Acceder");
-            }
-
             // Executes setMapView function from map_view.js
             setMapView();
+
+            /** 
+            Verify if there is a IP Direction Saved on WebStorage and add a link
+            to the map in the navbar.
+            **/
+            checkIPDirection();
             
         }// Init End
     </script>
