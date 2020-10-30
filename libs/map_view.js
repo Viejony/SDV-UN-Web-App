@@ -130,6 +130,22 @@ function setMapView() {
         }
     });
 
+
+    /** 
+     * Object that contains the camera image, loaded from the SDV. Is placed in the
+     * camera_image div (html document)
+     * @member {ROSLIB.Topic}
+     */
+    var image_topic = new ROSLIB.Topic({
+        ros: rbServer, name: '/camera/rgb/image_rect_color/compressed',
+        messageType: 'sensor_msgs/CompressedImage',
+	queue_size: 1,
+        throttle_rate: 30
+    });
+    image_topic.subscribe(function(message) {
+        document.getElementById('camera_image').src = "data:image/jpg;base64," + message.data;
+    });
+
     //////////////////////////////////////////////////////////////////////////////
     // ROS Map View
 
